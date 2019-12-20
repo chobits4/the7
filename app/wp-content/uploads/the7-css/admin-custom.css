@@ -1,0 +1,61 @@
+.editor-styles-wrapper,
+.editor-styles-wrapper .editor-writing-flow,
+.editor-styles-wrapper p,
+.editor-styles-wrapper .wp-block p {
+  font:    17px / 30px "Lora", Helvetica, Arial, Verdana, sans-serif;
+  word-spacing: normal;
+}
+.editor-styles-wrapper .wp-block-cover .wp-block-cover-text,
+.editor-styles-wrapper .wp-block-cover h2 {
+  font:    56px / 60px "Alex Brush", Helvetica, Arial, Verdana, sans-serif !important;
+  text-transform: none;
+}
+.text-big,
+.dt-accordion-text-big .wpb_accordion_header > a {
+  font-size: 17px;
+  line-height: 30px;
+}
+.text-normal,
+.dt-accordion-text-normal .wpb_accordion_header > a {
+  font-size: 17px;
+  line-height: 30px;
+}
+.text-small,
+.dt-accordion-text-small .wpb_accordion_header > a {
+  font-size: 14px;
+  line-height: 24px;
+}
+.wp-block-heading h1,
+.wp-block-freeform.block-library-rich-text__tinymce > h1 {
+  font:    86px / 90px "Alex Brush", Helvetica, Arial, Verdana, sans-serif;
+  text-transform: none;
+}
+.wp-block-heading h2,
+.wp-block-freeform.block-library-rich-text__tinymce > h2 {
+  font:    76px / 60px "Alex Brush", Helvetica, Arial, Verdana, sans-serif;
+  text-transform: none;
+}
+.wp-block-heading h3,
+.wp-block-freeform.block-library-rich-text__tinymce > h3 {
+  font:    56px / 60px "Alex Brush", Helvetica, Arial, Verdana, sans-serif;
+  text-transform: none;
+}
+.wp-block-heading h4,
+.wp-block-freeform.block-library-rich-text__tinymce > h4 {
+  font:    34px / 42px "Lora", Helvetica, Arial, Verdana, sans-serif;
+  text-transform: none;
+}
+.wp-block-heading h5,
+.wp-block-freeform.block-library-rich-text__tinymce > h5 {
+  font:    24px / 36px "Lora", Helvetica, Arial, Verdana, sans-serif;
+  text-transform: none;
+}
+.wp-block-heading h6,
+.wp-block-freeform.block-library-rich-text__tinymce > h6 {
+  font:    20px / 32px "Lora", Helvetica, Arial, Verdana, sans-serif;
+  text-transform: none;
+}
+.editor-styles-wrapper .wp-block .wp-block-button .wp-block-button__link {
+  font:    16px / 18px "Lora", Helvetica, Arial, Verdana, sans-serif;
+  text-transform: none;
+}
