@@ -35,27 +35,27 @@ RUN ln -s /etc/php/7.1/mods-available/mcrypt.ini /etc/php/7.3/mods-available/ &&
   phpenmod mcrypt
 
 # Add image configuration and scripts
-ADD ./supporting_files/start-apache2.sh /start-apache2.sh
-ADD ./supporting_files/start-mysqld.sh /start-mysqld.sh
-ADD ./supporting_files/run.sh /run.sh
+ADD supporting_files/start-apache2.sh /start-apache2.sh
+ADD supporting_files/start-mysqld.sh /start-mysqld.sh
+ADD supporting_files/run.sh /run.sh
 RUN chmod 755 /*.sh
-ADD ./supporting_files/supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
-ADD ./supporting_files/supervisord-mysqld.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
-ADD ./supporting_files/mysqld_innodb.cnf /etc/mysql/conf.d/mysqld_innodb.cnf
+ADD supporting_files/supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
+ADD supporting_files/supervisord-mysqld.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
+ADD supporting_files/mysqld_innodb.cnf /etc/mysql/conf.d/mysqld_innodb.cnf
 
 # Allow mysql to bind on 0.0.0.0
 RUN sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf && \
   sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
 
 # Set PHP timezones to Europe/London
-# RUN sed -i "s/;date.timezone =/date.timezone = Europe\/London/g" /etc/php/7.3/apache2/php.ini
-# RUN sed -i "s/;date.timezone =/date.timezone = Europe\/London/g" /etc/php/7.3/cli/php.ini
+RUN sed -i "s/;date.timezone =/date.timezone = Europe\/London/g" /etc/php/7.3/apache2/php.ini
+RUN sed -i "s/;date.timezone =/date.timezone = Europe\/London/g" /etc/php/7.3/cli/php.ini
 
 # Remove pre-installed database
 RUN rm -rf /var/lib/mysql
 
 # Add MySQL utils
-ADD ./supporting_files/create_mysql_users.sh /create_mysql_users.sh
+ADD supporting_files/create_mysql_users.sh /create_mysql_users.sh
 RUN chmod 755 /*.sh
 
 # Add phpmyadmin
@@ -72,16 +72,16 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
 
 ENV MYSQL_PASS:-$(pwgen -s 12 1)
 # config to enable .htaccess
-ADD ./supporting_files/apache_default /etc/apache2/sites-available/000-default.conf
+ADD supporting_files/apache_default /etc/apache2/sites-available/000-default.conf
 RUN a2enmod rewrite
 
 # Configure /app folder with the7 app
 RUN mkdir -p /app && rm -fr /var/www/html && ln -s /app /var/www/html
-ADD ./app/ /app
+ADD app/ /app
 
 # Configure /var/lib/mysql with the7 mysql
 RUN rm -rf /var/lib/mysql
-ADD ./mysql/ /var/lib/mysql
+ADD mysql/ /var/lib/mysql
 
 #Environment variables to configure php
 ENV PHP_UPLOAD_MAX_FILESIZE 10M
