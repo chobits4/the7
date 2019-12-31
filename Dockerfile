@@ -14,7 +14,7 @@ ENV PHPMYADMIN_VERSION=4.9.0.1
 # Tweaks to give Apache/PHP write permissions to the app
 RUN usermod -u ${BOOT2DOCKER_ID} www-data && \
     usermod -G staff www-data && \
-    userADD ./-r mysql && \
+    useradd -r mysql && \
     usermod -G staff mysql
 
 RUN groupmod -g $(($BOOT2DOCKER_GID + 10000)) $(getent group $BOOT2DOCKER_GID | cut -d: -f1)
@@ -34,7 +34,7 @@ RUN add-apt-repository -y ppa:ondrej/php && \
 RUN ln -s /etc/php/7.1/mods-available/mcrypt.ini /etc/php/7.3/mods-available/ && \
   phpenmod mcrypt
 
-# ADD ./image configuration and scripts
+# Add image configuration and scripts
 ADD ./supporting_files/start-apache2.sh /start-apache2.sh
 ADD ./supporting_files/start-mysqld.sh /start-mysqld.sh
 ADD ./supporting_files/run.sh /run.sh
@@ -54,17 +54,17 @@ RUN sed -i "s/;date.timezone =/date.timezone = Europe\/London/g" /etc/php/7.3/cl
 # Remove pre-installed database
 RUN rm -rf /var/lib/mysql
 
-# ADD ./MySQL utils
+# Add MySQL utils
 ADD ./supporting_files/create_mysql_users.sh /create_mysql_users.sh
 RUN chmod 755 /*.sh
 
-# ADD ./phpmyadmin
+# Add phpmyadmin
 RUN wget -O /tmp/phpmyadmin.tar.gz https://files.phpmyadmin.net/phpMyAdmin/${PHPMYADMIN_VERSION}/phpMyAdmin-${PHPMYADMIN_VERSION}-all-languages.tar.gz
 RUN tar xfvz /tmp/phpmyadmin.tar.gz -C /var/www
 RUN ln -s /var/www/phpMyAdmin-${PHPMYADMIN_VERSION}-all-languages /var/www/phpmyadmin
 RUN mv /var/www/phpmyadmin/config.sample.inc.php /var/www/phpmyadmin/config.inc.php
 
-# ADD ./composer
+# Add composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
     php composer-setup.php && \
     php -r "unlink('composer-setup.php');" && \
@@ -87,7 +87,7 @@ ADD ./mysql/ /var/lib/mysql
 ENV PHP_UPLOAD_MAX_FILESIZE 10M
 ENV PHP_POST_MAX_SIZE 10M
 
-# ADD ./volumes for the app and MySql
+# Add volumes for the app and MySql
 VOLUME  ["/etc/mysql", "/var/lib/mysql", "/app" ]
 
 EXPOSE 80 3306
